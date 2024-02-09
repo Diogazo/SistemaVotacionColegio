@@ -100,13 +100,12 @@ public class PanelCrearMesas extends JInternalFrame implements ActionListener {
 	
 	
 	private void agregarMesa() {
-		mesa = new Mesa();
-		mesa.setnombreMesa(txtNombreMesa.getText());
+	    mesa = new Mesa();
+	    mesa.setNombreMesa(txtNombreMesa.getText());
 
-		
-		mesas.add(mesa);
-		agregarFila();
-		txtNombreMesa.setText("");
+	    mesas.add(mesa);
+	    agregarFila();
+	    txtNombreMesa.setText("");
 	}
 	
 	private void limpiarCampos() {
@@ -115,12 +114,15 @@ public class PanelCrearMesas extends JInternalFrame implements ActionListener {
 
 	
 	private void agregarFila() {
-		model.setRowCount(0);
-		for (Mesa mesa : mesas) {
-			Object[] fila = new Object[2];
-			fila[0] = mesa.getnombreMesa();
-			model.addRow(fila);
-		}
+	    // Limpiar la tabla antes de agregar las filas
+	    model.setRowCount(0);
+	    
+	    // Agregar las mesas a la tabla
+	    for (Mesa mesa : mesas) {
+	        Object[] fila = new Object[2];
+	        fila[0] = mesa.getNombreMesa();
+	        model.addRow(fila);
+	    }
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -49,7 +50,7 @@ public class PanelCandidatos extends JInternalFrame implements ActionListener {
 	 */
 	public PanelCandidatos( List <Candidato> candidatos) {
 		
-		this.candidatos = candidatos;
+	    this.candidatos = candidatos != null ? candidatos : new ArrayList<>();
 		
 		setTitle("Añadir Candidatos");
 		setBounds(100, 100, 564, 392);
@@ -124,7 +125,7 @@ public class PanelCandidatos extends JInternalFrame implements ActionListener {
 	
 	
 	private void agregarCandidato() {
-		candidato = new Candidato();
+		candidato = new Candidato(txtNombresCandidatos.getText(), txtPartido.getText());
 		candidato.setNombreCandidato(txtNombresCandidatos.getText());
 		candidato.setPartido(txtPartido.getText());
 

@@ -81,9 +81,9 @@ public class PanelPadronElectoral extends JInternalFrame implements ActionListen
 
         for (Mesa mesa : mesas) {
             for (Estudiante estudiante : mesa.getEstudiantesDeMesa()) {
-                String combinacion = estudiante.getNombreEstudiante() + mesa.getnombreMesa();
+                String combinacion = estudiante.getNombreEstudiante() + mesa.getNombreMesa();
                 if (combinacionesUnicas.add(combinacion)) {
-                    agregarFila(estudiante.getNombreEstudiante(), mesa.getnombreMesa(), estudiante.getCedulaEstudiante(), estudiante.getCurso().getNombreCurso());
+                    agregarFila(estudiante.getNombreEstudiante(), mesa.getNombreMesa(), estudiante.getCedulaEstudiante(), estudiante.getCurso().getNombreCurso());
                 }
             }
         }

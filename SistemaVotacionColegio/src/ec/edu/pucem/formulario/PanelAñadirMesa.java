@@ -55,6 +55,10 @@ public class PanelAñadirMesa extends JInternalFrame implements ActionListener {
 		getContentPane().add(lblNombreMesa);
 		
 		comboBox = new JComboBox<>();
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 
 		DefaultComboBoxModel<Mesa> comboBoxModel = new DefaultComboBoxModel<>(
 		mesas.toArray(new Mesa[0]));
@@ -66,7 +70,7 @@ public class PanelAñadirMesa extends JInternalFrame implements ActionListener {
 							boolean cellHasFocus) {
 						if (value instanceof Mesa) {
 							Mesa mesa = (Mesa) value;
-							value = mesa.getnombreMesa();
+							value = mesa.getNombreMesa();
 						}
 						return super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 					}
@@ -136,23 +140,47 @@ public class PanelAñadirMesa extends JInternalFrame implements ActionListener {
 		});
 		btnAgregar.setBounds(149, 100, 89, 23);
 		getContentPane().add(btnAgregar);
+		cargarMesas();
 
 	}
 	
-	
+	private void cargarMesas() {
+	    // Limpiar ComboBox de mesas antes de cargar las mesas existentes
+	    comboBox.removeAllItems();
+
+	    // Agregar las mesas existentes al ComboBox
+	    for (Mesa mesa : mesas) {
+	        comboBox.addItem(mesa);
+	    }
+	}
 
 
 	private void agregarEstudianteAMesa() {
-	    mesa = (Mesa) comboBox.getSelectedItem();
+	    Mesa mesaSeleccionada = (Mesa) comboBox.getSelectedItem();
+	    Estudiante estudianteSeleccionado = (Estudiante) comboBox2.getSelectedItem();
 	    
-	    Object estudianteSeleccionadoObj = comboBox2.getSelectedItem();
-	    
-	    if (mesa != null && estudianteSeleccionadoObj != null) {
-	        Estudiante estudianteSeleccionado = (Estudiante) estudianteSeleccionadoObj;
-	        mesa.getEstudiantesDeMesa().add(estudianteSeleccionado);
+	    if (mesaSeleccionada != null && estudianteSeleccionado != null) {
+	        // Verifica si la mesa ya está en la lista de mesas
+	        boolean mesaExiste = false;
+	        for (Mesa m : mesas) {
+	            if (m.getNombreMesa().equals(mesaSeleccionada.getNombreMesa())) {
+	                // La mesa ya existe en la lista, establece la referencia a la mesa existente
+	                mesaSeleccionada = m;
+	                mesaExiste = true;
+	                break;
+	            }
+	        }
 	        
-	        mesas.add(mesa);
-	        agregarFila(mesa.getnombreMesa(), estudianteSeleccionado.getNombreEstudiante());
+	        // Si la mesa no existe en la lista, agrégala
+	        if (!mesaExiste) {
+	            mesas.add(mesaSeleccionada);
+	        }
+	        
+	        // Agrega el estudiante a la mesa
+	        mesaSeleccionada.getEstudiantesDeMesa().add(estudianteSeleccionado);
+	        
+	        // Agrega la fila a la tabla
+	        agregarFila(mesaSeleccionada.getNombreMesa(), estudianteSeleccionado.getNombreEstudiante());
 	    } else {
 	        System.out.println("Mesa o estudiante seleccionado es nulo");
 	    }
